@@ -1,9 +1,7 @@
 package com.gwabang.gwabang.member.entity;
-
-
 import jakarta.persistence.*;
 import lombok.*;
-
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "member")
@@ -15,25 +13,23 @@ public class Member {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "member_id")
     private Long id;
 
-    @Column(name = "member_key", nullable = false, unique = true, length = 40)
-    private String memberKey;
+    @Column(name = "department_id", nullable = false)
+    private Integer departmentId;
 
-    @Column(nullable = false, unique = true, length = 100)
+    @Column(length = 255)
     private String email;
 
-    @Column(nullable = false, length = 255)
+    @Column(length = 255)
     private String password;
 
-    @Column(nullable = false, length = 10)
-    private String name;
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
 
-    @Column(name = "payment_account_id")
-    private Long paymentAccountId;
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 
-    @Column(name = "main_account_id", unique = true)
-    private Long mainAccountId;
+    @Column(name = "deleted_at")
+    private LocalDateTime deletedAt;
 }
-
