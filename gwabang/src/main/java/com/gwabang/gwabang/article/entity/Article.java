@@ -1,36 +1,37 @@
-package com.gwabang.gwabang.comment.entity;
+package com.gwabang.gwabang.article.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
 
+@Entity
+@Table(name="article")
 @Getter
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-@Entity
-@Table(name = "comment")
-public class Comment {
+public class Article {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name="category_id")
+    private Integer categoryId;
+
     @Column(name = "member_id")
     private Long memberId;
 
-    @Column(name = "article_id")
-    private Long articleId;
+    @Column(name = "title")
+    private String title;
 
-    @Column(name = "content")
     @Lob
+    @Column(name = "content")
     private String content;
 
-    private LocalDateTime createAt;
+    private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private LocalDateTime deletedAt;
-
-
 
 
 }

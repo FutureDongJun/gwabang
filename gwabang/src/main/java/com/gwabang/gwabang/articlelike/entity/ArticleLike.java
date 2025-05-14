@@ -1,17 +1,15 @@
-package com.gwabang.gwabang.comment.entity;
+package com.gwabang.gwabang.articlelike.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.time.LocalDateTime;
 
 @Getter
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Entity
-@Table(name = "comment")
-public class Comment {
+@Table(name="articlelike")
+public class ArticleLike {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,13 +20,8 @@ public class Comment {
     @Column(name = "article_id")
     private Long articleId;
 
-    @Column(name = "content")
-    @Lob
-    private String content;
-
-    private LocalDateTime createAt;
-    private LocalDateTime updatedAt;
-    private LocalDateTime deletedAt;
+    @Column(name = "article_count")
+    private Long articleCount;
 
 
 
