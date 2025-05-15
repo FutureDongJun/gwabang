@@ -1,5 +1,7 @@
 package com.gwabang.gwabang.articlelike.entity;
 
+import com.gwabang.gwabang.article.entity.Article;
+import com.gwabang.gwabang.member.entity.Member;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -14,11 +16,13 @@ public class ArticleLike {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "member_id")
-    private Long memberId;
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
 
-    @Column(name = "article_id")
-    private Long articleId;
+    @ManyToOne
+    @JoinColumn(name = "article_id")
+    private Article article;
 
     @Column(name = "article_count")
     private Long articleCount;

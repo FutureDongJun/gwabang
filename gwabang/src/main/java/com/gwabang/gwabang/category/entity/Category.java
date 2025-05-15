@@ -1,7 +1,12 @@
 package com.gwabang.gwabang.category.entity;
 
+import com.gwabang.gwabang.article.entity.Article;
+import com.gwabang.gwabang.departmentgroup.entity.DepartmentGroup;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Builder
@@ -14,10 +19,14 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "group_code",nullable = false)
-    private Integer groupCode;
+    @ManyToOne
+    @JoinColumn(name = "group_code",nullable = false)
+    private DepartmentGroup departmentGroup;
 
     @Column(name = "name")
     private String name;
+
+    @OneToMany(mappedBy = "category")
+    private List<Article> articles = new ArrayList<>();
 
 }

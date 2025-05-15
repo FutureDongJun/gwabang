@@ -1,5 +1,7 @@
 package com.gwabang.gwabang.commentlike.entity;
 
+import com.gwabang.gwabang.comment.entity.Comment;
+import com.gwabang.gwabang.member.entity.Member;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -14,11 +16,13 @@ public class CommentLike {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="member_id")
-    private Long memberId;
+    @ManyToOne
+    @JoinColumn(name="member_id")
+    private Member member;
 
-    @Column(name="comment_id")
-    private Long commentId;
+    @ManyToOne
+    @JoinColumn(name="comment_id")
+    private Comment comment;
 
     @Column(name = "comment_count")
     private Long commentCount;

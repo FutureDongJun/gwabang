@@ -1,9 +1,15 @@
 package com.gwabang.gwabang.article.entity;
 
+import com.gwabang.gwabang.articlelike.entity.ArticleLike;
+import com.gwabang.gwabang.category.entity.Category;
+import com.gwabang.gwabang.comment.entity.Comment;
+import com.gwabang.gwabang.member.entity.Member;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name="article")
@@ -16,11 +22,13 @@ public class Article {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="category_id")
-    private Integer categoryId;
+    @ManyToOne
+    @JoinColumn(name="category_id")
+    private Category category;
 
-    @Column(name = "member_id")
-    private Long memberId;
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
 
     @Column(name = "title")
     private String title;
@@ -32,6 +40,12 @@ public class Article {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private LocalDateTime deletedAt;
+
+    @OneToMany(mappedBy = "article")
+    private List<Comment> comments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "article")
+    private List<ArticleLike> articleLikes = new ArrayList<>();
 
 
 }

@@ -1,9 +1,14 @@
 package com.gwabang.gwabang.comment.entity;
 
+import com.gwabang.gwabang.article.entity.Article;
+import com.gwabang.gwabang.commentlike.entity.CommentLike;
+import com.gwabang.gwabang.member.entity.Member;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Builder
@@ -16,11 +21,13 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "member_id")
-    private Long memberId;
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
 
-    @Column(name = "article_id")
-    private Long articleId;
+    @ManyToOne
+    @JoinColumn(name = "article_id")
+    private Article article;
 
     @Column(name = "content")
     @Lob
@@ -30,6 +37,8 @@ public class Comment {
     private LocalDateTime updatedAt;
     private LocalDateTime deletedAt;
 
+    @OneToMany(mappedBy = "comment")
+    private List<CommentLike> commentLikes = new ArrayList<>();
 
 
 
