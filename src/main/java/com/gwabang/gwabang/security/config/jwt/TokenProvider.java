@@ -1,12 +1,11 @@
 package com.gwabang.gwabang.security.config.jwt;
 
 import com.gwabang.gwabang.member.entity.Member;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Header;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
-import lombok.RequiredArgsConstructor;
+import io.jsonwebtoken.security.SignatureException;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -16,47 +15,58 @@ import java.security.Key;
 import java.time.Duration;
 import java.util.*;
 
-@RequiredArgsConstructor
+@Slf4j
 @Service
 public class TokenProvider {
 
     private final JwtProperties jwtProperties;
-    private static final String SECRET_KEY = "kimchingAndAIkimchingAndAIkimchingAndAI"; //최소 256비트 필요해서..
+    private final Key key;
+    private final long tokenValidityInMilliseconds;
+
+    public TokenProvider(
+            JwtProperties jwtProperties,
+            @Value("${jwt.secret}") String secret,
+            @Value("${jwt.token-validity-in-seconds}") long tokenValidityInSeconds) {
+        this.jwtProperties = jwtProperties;
+        this.key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
+        this.tokenValidityInMilliseconds = tokenValidityInSeconds * 1000;
+    }
 
     public String generateToken(Member member, Duration expiredAt) {
         Date now = new Date();
-        Key key = Keys.hmacShaKeyFor(Base64.getDecoder().decode(SECRET_KEY));
-        return makeToken(new Date(now.getTime() + expiredAt.toMillis()), member, key);
-    }
-
-    //토큰 생성
-    private String makeToken(Date expiry, Member member, Key key) {
-        Date now = new Date();
+        Date expiryDate = new Date(now.getTime() + expiredAt.toMillis());
 
         return Jwts.builder()
                 .setHeaderParam(Header.TYPE, Header.JWT_TYPE) //헤더 type:jwt
                 .setIssuer(jwtProperties.getIssuer()) // 내용 issuer
                 .setIssuedAt(now)
-                .setExpiration(expiry)
+                .setExpiration(expiryDate)
                 .setSubject(member.getEmail())
                 .claim("id", member.getId()) // 클레임 id : 멤버 ID
-                .signWith(key, SignatureAlgorithm.ES256)
+                .signWith(key)
                 .compact();
     }
 
     //토큰 검증
     public boolean validToken(String token) {
         try {
-            Key key = Keys.hmacShaKeyFor(Base64.getDecoder().decode(jwtProperties.getSecret_key()));
-
             Jwts.parserBuilder()
                     .setSigningKey(key)
                     .build()
                     .parseClaimsJws(token);
             return true;
-        } catch (Exception e) {
-            return false;
+        } catch (SignatureException ex) {
+            log.error("Invalid JWT signature");
+        } catch (MalformedJwtException ex) {
+            log.error("Invalid JWT token");
+        } catch (ExpiredJwtException ex) {
+            log.error("Expired JWT token");
+        } catch (UnsupportedJwtException ex) {
+            log.error("Unsupported JWT token");
+        } catch (IllegalArgumentException ex) {
+            log.error("JWT claims string is empty");
         }
+        return false;
     }
 
     //토큰 기반으로 인증 정보를 가져오기
@@ -75,7 +85,6 @@ public class TokenProvider {
     }
 
     private Claims getClaims(String token) {
-        Key key = Keys.hmacShaKeyFor(Base64.getDecoder().decode(jwtProperties.getSecret_key()));
         return Jwts.parserBuilder()
                 .setSigningKey(key)
                 .build()

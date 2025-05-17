@@ -4,20 +4,21 @@ import com.gwabang.gwabang.member.dto.AddMemberRequest;
 import com.gwabang.gwabang.member.entity.Member;
 import com.gwabang.gwabang.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
 public class MemberService {
 
     private final MemberRepository memberRepository;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     public Long save(AddMemberRequest dto) {
         Member member = Member.builder()
                 .email(dto.getEmail())
-                .password(bCryptPasswordEncoder.encode(dto.getPassword()))
+                .password(passwordEncoder.encode(dto.getPassword()))
                 .departmentId(dto.getDepartmentId())
                 .build();
 
@@ -30,5 +31,11 @@ public class MemberService {
     public Member findById(Long id) {
         return memberRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Unexpected user"));
+    }
+
+    @Transactional(readOnly = true)
+    public Member findByEmail(String email) {
+        return memberRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("해당 이메일의 사용자가 없습니다."));
     }
 }

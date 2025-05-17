@@ -1,6 +1,7 @@
 package com.gwabang.gwabang.security.controller;
 
 import com.gwabang.gwabang.member.entity.Member;
+import com.gwabang.gwabang.member.service.MemberService;
 import com.gwabang.gwabang.security.config.jwt.TokenProvider;
 import com.gwabang.gwabang.security.dto.LoginRequest;
 import com.gwabang.gwabang.security.dto.LoginResponse;
@@ -26,21 +27,25 @@ public class AuthController {
     private final AuthenticationManager authenticationManager;
     private final TokenProvider tokenProvider;
     private final RefreshTokenService refreshTokenService;
+    private final MemberService memberService;
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
+    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
         Authentication authentication = authenticationManager.authenticate(
-            new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
+            new UsernamePasswordAuthenticationToken(
+                loginRequest.getEmail(),
+                loginRequest.getPassword()
+            )
         );
-        
+
         SecurityContextHolder.getContext().setAuthentication(authentication);
         
-        Member member = (Member) authentication.getPrincipal();
-        String accessToken = tokenProvider.generateToken(member, Duration.ofHours(2));
+        Member member = memberService.findByEmail(loginRequest.getEmail());
+        String accessToken = tokenProvider.generateToken(member, Duration.ofMinutes(30));
         String refreshToken = tokenProvider.generateToken(member, Duration.ofDays(7));
         
         refreshTokenService.saveRefreshToken(member.getId(), refreshToken);
-        
+
         return ResponseEntity.ok(new LoginResponse(accessToken, refreshToken));
     }
 } 
