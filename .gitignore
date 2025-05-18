@@ -1,0 +1,17 @@
+# frontend 관련 무시
+/frontend/node_modules/
+/frontend/.next/
+/frontend/dist/
+/frontend/.env
+
+# backend 관련 무시
+/gwabang/.gradle/
+/gwabang/target/
+/gwabang/.idea/
+/gwabang/build/
+/gwabang/*.log
+
+# OS / IDE 공통 무시
+.DS_Store
+*.iml
+*.log
