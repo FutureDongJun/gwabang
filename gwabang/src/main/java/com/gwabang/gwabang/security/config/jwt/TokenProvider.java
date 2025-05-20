@@ -91,4 +91,12 @@ public class TokenProvider {
                 .parseClaimsJws(token)
                 .getBody();
     }
+
+    public String getEmailFromToken(String token) {
+        return Jwts.parser()
+                .setSigningKey(key)
+                .parseClaimsJws(token)
+                .getBody()
+                .getSubject(); // 이메일 또는 사용자 식별자
+    }
 }

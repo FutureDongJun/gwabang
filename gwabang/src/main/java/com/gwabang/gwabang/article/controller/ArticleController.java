@@ -18,9 +18,15 @@ public class ArticleController {
     public ResponseEntity<ArticleResponse> createArticle(
             @PathVariable String groupCode,
             @RequestBody ArticleRequest dto,
-            @RequestHeader("Authorization") String accessToken
+            @RequestHeader("Authorization") String authorizationHeader
     ) {
+        // Bearer 토큰에서 실제 access token 추출
+        String accessToken = authorizationHeader.startsWith("Bearer ")
+                ? authorizationHeader.substring(7)
+                : authorizationHeader;
+
         ArticleResponse result = articleService.createArticle(groupCode, dto, accessToken);
         return ResponseEntity.ok(result);
     }
+
 }
