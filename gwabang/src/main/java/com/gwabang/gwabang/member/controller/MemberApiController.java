@@ -22,13 +22,13 @@ public class MemberApiController {
     @PostMapping("/api/user/signup")
     public String signup(@RequestBody AddMemberRequest request) {
         memberService.save(request);
-        return "redirect:/login"; //회원 가입 완료 후 로그인 페이지
+        return "redirect:/api/user/login";
     }
 
     @GetMapping("/api/user/logout")
     public String logout(HttpServletRequest request, HttpServletResponse response) {
         new SecurityContextLogoutHandler().logout(request, response, SecurityContextHolder.getContext().getAuthentication());
 
-        return "redirect:/login";
+        return "redirect:/api/user/login";
     }
 }

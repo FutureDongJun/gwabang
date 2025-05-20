@@ -5,7 +5,6 @@ import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -24,12 +23,11 @@ public class TokenProvider {
     private final long tokenValidityInMilliseconds;
 
     public TokenProvider(
-            JwtProperties jwtProperties,
-            @Value("${jwt.secret}") String secret,
-            @Value("${jwt.token-validity-in-seconds}") long tokenValidityInSeconds) {
+            JwtProperties jwtProperties) {
         this.jwtProperties = jwtProperties;
-        this.key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
-        this.tokenValidityInMilliseconds = tokenValidityInSeconds * 1000;
+        // application.properties의 jwt.secret_key를 사용하여 키 생성
+        this.key = Keys.hmacShaKeyFor(jwtProperties.getSecretKey().getBytes());
+        this.tokenValidityInMilliseconds = jwtProperties.getAccessTokenValidity();
     }
 
     public String generateToken(Member member, Duration expiredAt) {
