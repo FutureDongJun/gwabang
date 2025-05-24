@@ -1,4 +1,5 @@
 import { Outlet } from "react-router";
+import { Link } from "react-router";
 
 export default function Sidebar() {
     return (
@@ -7,12 +8,17 @@ export default function Sidebar() {
         {/* 좌측 사이드바 */}
         <aside className="w-64 p-6 bg-white dark:bg-[#1E2028] shadow-md">
           <div className="text-xl font-bold mb-6">학과방</div>
+          <Link to={'/login'}>
           <button className="w-full mb-4 py-2 bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-semibold">
             로그인
           </button>
+          </Link>
+          
+          <Link to={'/SignupPage'}>
           <button className="w-full mb-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg font-semibold">
             회원가입
           </button>
+          </Link>
           <div className="mb-4 text-sm font-medium text-gray-700 dark:text-gray-300">학과별 커뮤니티 둘러보기</div>
           <input
             type="text"
