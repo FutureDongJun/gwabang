@@ -4,6 +4,7 @@ import Sidebar from "./layout/Sidebar";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
+import DepartmentBoard from "./pages/DepartmentBoard";
 
 function App() {
   return (
@@ -11,6 +12,8 @@ function App() {
       <Routes>
         <Route element={<Sidebar />}>
           <Route index element={<HomePage />} />
+          <Route path="/article/:groupCode" element={<DepartmentBoard/>} />
+          <Route path="/article/:groupCode/:id" element={<PostDetail />} />
         </Route>
         <Route path="/login" element={<LoginPage />}></Route>
         <Route path="/signup" element={<SignupPage />}></Route>
