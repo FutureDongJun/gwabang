@@ -9,4 +9,5 @@ public class ArticleResponse {
     private Long articleId;
     private String title;
     private String content;
+
 }

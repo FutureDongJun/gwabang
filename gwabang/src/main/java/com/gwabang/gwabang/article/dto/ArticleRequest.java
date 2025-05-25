@@ -2,6 +2,7 @@ package com.gwabang.gwabang.article.dto;
 
 import lombok.*;
 
+@Setter
 @Getter
 @Builder
 public class ArticleRequest {

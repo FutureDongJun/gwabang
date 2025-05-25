@@ -59,4 +59,41 @@ public class ArticleService {
         return new ArticleResponse(article.getId(), article.getTitle(), article.getContent());
     }
 
+
+    @Transactional
+    public ArticleResponse getArticle(Long id) {
+        Article article = articleRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("게시글을 찾을 수 없습니다."));
+        return new ArticleResponse(article.getId(), article.getTitle(), article.getContent());
+    }
+
+    @Transactional
+    public ArticleResponse updateArticle(Long id, ArticleRequest dto, String accessToken) {
+        String email = tokenProvider.getEmailFromToken(accessToken);
+
+        Article article = articleRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("게시글을 찾을 수 없습니다."));
+
+        if (!article.getMember().getEmail().equals(email)) {
+            throw new RuntimeException("작성자만 수정할 수 있습니다.");
+        }
+
+        article.update(dto.getTitle(), dto.getContent());
+        return new ArticleResponse(article.getId(), article.getTitle(), article.getContent());
+    }
+
+    @Transactional
+    public void deleteArticle(Long id, String accessToken) {
+        String email = tokenProvider.getEmailFromToken(accessToken);
+
+        Article article = articleRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("게시글을 찾을 수 없습니다."));
+
+        if (!article.getMember().getEmail().equals(email)) {
+            throw new RuntimeException("작성자만 삭제할 수 있습니다.");
+        }
+
+        articleRepository.delete(article);
+    }
+
 }

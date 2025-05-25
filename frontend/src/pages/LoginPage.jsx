@@ -1,8 +1,34 @@
+import { useState } from "react";
+
 export default function LoginPage() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const API_URL = process.env.REACT_APP_API_URL;
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch(`${API_URL}/api/user/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+      if (!response.ok) {
+        throw new "로그인 실패"();
+      }
+      const data = await response.json();
+      console.log("로그인 성공:", data);
+
+      localStorage.setItem("accessToken", data.accessToken);
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <form action="#" method="POST" className="space-y-6">
+        <form onSubmit={handleLogin} method="POST" className="space-y-6">
           <div>
             <label
               htmlFor="email"
@@ -15,8 +41,10 @@ export default function LoginPage() {
                 id="email"
                 name="email"
                 type="email"
+                value={email}
                 required
                 autoComplete="email"
+                onChange={(e) => setEmail(e.target.value)}
                 className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-orange-600 sm:text-sm/6"
               />
             </div>
@@ -44,6 +72,8 @@ export default function LoginPage() {
                 id="password"
                 name="password"
                 type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 required
                 autoComplete="current-password"
                 className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-orange-600 sm:text-sm/6"
@@ -60,7 +90,7 @@ export default function LoginPage() {
             </button>
           </div>
         </form>
-        
+
         <p className="mt-10 text-center text-sm/6 text-gray-500">
           <a
             href="#"

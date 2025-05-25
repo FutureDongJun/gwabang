@@ -33,6 +33,9 @@ public class Article {
     @Column(name = "title")
     private String title;
 
+    @Column(name = "group_code")
+    private String groupCode;
+
     @Lob
     @Column(name = "content")
     private String content;
@@ -47,5 +50,10 @@ public class Article {
     @OneToMany(mappedBy = "article")
     private List<ArticleLike> articleLikes = new ArrayList<>();
 
+
+    public void update(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
 
 }
