@@ -28,17 +28,17 @@ export default function Sidebar() {
         />
         <ul className="space-y-2 text-sm">
           <li className="flex justify-between">
-            <Link to="/board/화학공학과" className="hover:text-orange-600">
+            <Link to="/article/화학공학과" className="hover:text-orange-600">
               화학공학과 <span className="text-gray-400">77,506명</span>
             </Link>
           </li>
           <li className="flex justify-between">
-            <Link to="/board/컴퓨터공학과" className="hover:text-orange-600">
+            <Link to="/article/컴퓨터공학과" className="hover:text-orange-600">
               컴퓨터공학과 <span className="text-gray-400">70,457명</span>
             </Link>
           </li>
           <li className="flex justify-between">
-            <Link to="/board/심리학과" className="hover:text-orange-600">
+            <Link to="/article/심리학과" className="hover:text-orange-600">
               심리학과 <span className="text-gray-400">68,798명</span>
             </Link>
           </li>

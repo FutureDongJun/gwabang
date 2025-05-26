@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from "axios";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -9,22 +10,24 @@ export default function LoginPage() {
     e.preventDefault();
 
     try {
-      const response = await fetch(`${API_URL}/api/user/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
+      const response = await axios.post(`${API_URL}/api/user/login`, {
+        email,
+        password,
       });
-      if (!response.ok) {
-        throw new "로그인 실패"();
-      }
-      const data = await response.json();
+
+      const data = response.data;
       console.log("로그인 성공:", data);
 
       localStorage.setItem("accessToken", data.accessToken);
     } catch (error) {
-      console.error(error.message);
+      console.error(
+        "로그인 실패:",
+        error.response?.data?.message || error.message
+      );
+      // 필요시 alert 또는 setError 상태로 사용자에게 피드백
     }
   };
+
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
