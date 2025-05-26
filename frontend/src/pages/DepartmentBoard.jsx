@@ -1,5 +1,6 @@
 import axios from "axios";
-import { useEffect } from "react";
+import { useState ,useEffect } from "react";
+import { Outlet, useParams } from "react-router";
 
 export default function DepartmentBoard() {
     const { groupCode } = useParams(); // url에서 학과 코드 추출하는 거임
@@ -44,6 +45,7 @@ export default function DepartmentBoard() {
                     ))}
                 </ul>
             )}
+            <Outlet />
         </div>
     );
 }

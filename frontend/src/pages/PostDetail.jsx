@@ -1,9 +1,11 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams } from "react-routerer-dom";
+import { useParams } from "react-router";
 
 
 export default function PostDetail() {
     const { id } = useParams();
+    const { groupcode } = useParams();
     const [post, setPost] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
