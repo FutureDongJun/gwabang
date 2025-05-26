@@ -8,13 +8,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/article")
+@RequestMapping("/api/article/{groupCode}")
 @RequiredArgsConstructor
 public class ArticleController {
 
     private final ArticleService articleService;
 
-    @PostMapping("/{groupCode}")
+    @PostMapping("/{id}")
     public ResponseEntity<ArticleResponse> createArticle(
             @PathVariable String groupCode,
             @RequestBody ArticleRequest dto,
