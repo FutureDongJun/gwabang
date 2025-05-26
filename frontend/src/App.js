@@ -13,11 +13,11 @@ function App() {
       <Routes>
         <Route element={<Sidebar />}>
           <Route index element={<MainPage />} />
-          <Route path="/article/:groupCode" element={<DepartmentBoard/>} />
+          <Route path="/article/:groupCode" element={<DepartmentBoard />} />
           <Route path="/article/:groupCode/:id" element={<PostDetail />} />
         </Route>
-        <Route path="/LoginPage" element={<LoginPage />}></Route>
-        <Route path="/SignupPage" element={<SignupPage />}></Route>
+        <Route path="/login" element={<LoginPage />}></Route>
+        <Route path="/signup" element={<SignupPage />}></Route>
       </Routes>
     </BrowserRouter>
   );

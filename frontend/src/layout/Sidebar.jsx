@@ -1,4 +1,4 @@
-import { Link, Outlet } from "react-router";
+import { Link, Outlet } from "react-router-dom";
 
 export default function Sidebar() {
   return (
@@ -6,13 +6,13 @@ export default function Sidebar() {
       {/* 좌측 사이드바 */}
       <aside className="w-64 p-6 bg-white dark:bg-[#1E2028] shadow-md">
         <div className="text-xl font-bold mb-6">학과방</div>
-        <Link to={'/LoginPage'}>
+        <Link to={"/login"}>
           <button className="w-full mb-4 py-2 bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-semibold">
             로그인
           </button>
         </Link>
 
-        <Link to={'/SignupPage'}>
+        <Link to={"/signup"}>
           <button className="w-full mb-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg font-semibold">
             회원가입
           </button>
@@ -45,7 +45,7 @@ export default function Sidebar() {
           {/* 나중에 학과 검색 인풋창이랑 과나열한 것들 수정해서 경로로 이동하는 식으로 해야함 */}
         </ul>
       </aside>
-      <Outlet/>
+      <Outlet />
     </div>
   );
 }
