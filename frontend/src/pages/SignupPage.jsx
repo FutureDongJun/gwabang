@@ -1,12 +1,47 @@
 import DepartmentDropdown from "../layout/DepartmentDropdown";
+import { useState } from "react";
+import axios from "axios";
 
 export default function SignupPage() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
+  const [selectedDepartment, setSelectedDepartment] = useState("");
+  const API_URL = process.env.REACT_APP_API_URL;
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (password !== passwordConfirm) {
+      alert("비밀번호가 일치하지 않음.");
+      return;
+    }
+
+    try {
+      const res = await axios.post(`${API_URL}/signup`, {
+        email,
+        password,
+        department: selectedDepartment, //departmentdropdown에서 선택
+      });
+
+      alert("회원가입 완료");
+    } catch (err) {
+      console.error(err);
+      alert("회원가입 실패:" + err.response?.data?.message || "서버오류");
+    }
+  };
+
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm"></div>
 
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <form action="#" method="POST" className="space-y-6">
+        <form
+          onSubmit={handleSubmit}
+          action="#"
+          method="POST"
+          className="space-y-6"
+        >
           <div>
             <label
               htmlFor="email"
@@ -19,14 +54,19 @@ export default function SignupPage() {
                 id="email"
                 name="email"
                 type="email"
+                value={email}
                 required
+                onChange={(e) => setEmail(e.target.value)}
                 autoComplete="email"
                 className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-green-600 sm:text-sm/6"
               />
             </div>
           </div>
           <div className="flex items-center justify-center bg-gray-100 w-full">
-            <DepartmentDropdown />
+            <DepartmentDropdown
+              selected={selectedDepartment}
+              setSelected={setSelectedDepartment}
+            />
           </div>
           <div>
             <div className="flex items-center justify-between">
@@ -42,8 +82,10 @@ export default function SignupPage() {
                 id="password"
                 name="password"
                 type="password"
+                value={password}
                 required
                 autoComplete="current-password"
+                onChange={(e) => setPassword(e.target.value)}
                 className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-green-600 sm:text-sm/6"
               />
             </div>
@@ -62,8 +104,10 @@ export default function SignupPage() {
                 id="password"
                 name="password"
                 type="password"
+                value={passwordConfirm}
+                onChange={(e) => setPasswordConfirm(e.target.value)}
                 required
-                autoComplete="current-password"
+                autoComplete="passwordConfirm"
                 className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-green-600 sm:text-sm/6"
               />
             </div>

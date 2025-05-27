@@ -14,9 +14,7 @@ const departments = [
   "의학과",
   "간호학과",
 ];
-
-export default function DepartmentDropdown() {
-  const [selected, setSelected] = useState("");
+export default function DepartmentDropdown({ selected, setSelected }) {
   const [query, setQuery] = useState("");
 
   const filtered =
@@ -35,7 +33,7 @@ export default function DepartmentDropdown() {
               className="w-full border-none py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 focus:ring-0"
               placeholder="학과 검색"
               onChange={(event) => setQuery(event.target.value)}
-              displayValue={(dept) => dept}
+              displayValue={() => selected}
             />
             <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">
               <ChevronUpDownIcon

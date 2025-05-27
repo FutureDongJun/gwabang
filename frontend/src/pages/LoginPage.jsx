@@ -96,7 +96,7 @@ export default function LoginPage() {
 
         <p className="mt-10 text-center text-sm/6 text-gray-500">
           <a
-            href="#"
+            href="/signup"
             className="font-semibold text-orange-600 hover:text-orange-500"
           >
             회원가입
