@@ -25,7 +25,7 @@ export default function DepartmentDropdown({ selected, setSelected }) {
         );
 
   return (
-    <div className="w-72">
+    <div className="w-full">
       <Combobox value={selected} onChange={setSelected}>
         <div className="relative">
           <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-md focus:outline-none sm:text-sm">

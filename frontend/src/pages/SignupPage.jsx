@@ -32,10 +32,8 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
-      <div className="sm:mx-auto sm:w-full sm:max-w-sm"></div>
-
-      <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+    <div className="flex min-h-full flex-col justify-center items-center px-6 py-12 lg:px-8">
+      <div className="w-full items-center justify-center max-w-sm mt-10 pr-auto">
         <form
           onSubmit={handleSubmit}
           action="#"
@@ -62,12 +60,18 @@ export default function SignupPage() {
               />
             </div>
           </div>
-          <div className="flex items-center justify-center bg-gray-100 w-full">
-            <DepartmentDropdown
-              selected={selectedDepartment}
-              setSelected={setSelectedDepartment}
-            />
+          <div>
+            <label className="block text-sm font-medium text-gray-900 mb-1">
+              학과
+            </label>
+            <div className="mt-1">
+              <DepartmentDropdown
+                selected={selectedDepartment}
+                setSelected={setSelectedDepartment}
+              />
+            </div>
           </div>
+
           <div>
             <div className="flex items-center justify-between">
               <label
