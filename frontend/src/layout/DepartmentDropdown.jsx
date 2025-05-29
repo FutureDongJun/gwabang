@@ -1,21 +1,21 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Combobox } from "@headlessui/react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
+import axios from "axios";
 
-const departments = [
-  "화학과",
-  "컴퓨터공학과",
-  "기계공학과",
-  "전자공학과",
-  "수학과",
-  "물리학과",
-  "심리학과",
-  "경영학과",
-  "의학과",
-  "간호학과",
-];
 export default function DepartmentDropdown({ selected, setSelected }) {
   const [query, setQuery] = useState("");
+  const [departments, setDepartments] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/api/departments`)
+      .then((res) => {
+        console.log("서버 응답:", res.data); // 이걸 확인하세요
+        setDepartments(res.data);
+      })
+      .catch((err) => console.error("학과 리스트 가져오기 실패", err));
+  }, []);
 
   const filtered =
     query === ""

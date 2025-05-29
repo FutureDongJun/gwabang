@@ -1,6 +1,7 @@
 import DepartmentDropdown from "../layout/DepartmentDropdown";
 import { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router";
 
 export default function SignupPage() {
   const [email, setEmail] = useState("");
@@ -8,6 +9,7 @@ export default function SignupPage() {
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [selectedDepartment, setSelectedDepartment] = useState("");
   const API_URL = process.env.REACT_APP_API_URL;
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -25,6 +27,7 @@ export default function SignupPage() {
       });
 
       alert("회원가입 완료");
+      navigate("/login");
     } catch (err) {
       console.error(err);
       alert("회원가입 실패:" + err.response?.data?.message || "서버오류");

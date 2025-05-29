@@ -21,7 +21,7 @@ public class Department {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "group_code")
+    @JoinColumn(name = "group_code", nullable=false)
     private DepartmentGroup departmentGroup;
 
     @Column(name="name")
