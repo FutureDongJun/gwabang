@@ -20,7 +20,7 @@ export default function SignupPage() {
     }
 
     try {
-      const res = await axios.post(`${API_URL}/signup`, {
+      const res = await axios.post(`${API_URL}/api/user/signup`, {
         email,
         password,
         department: selectedDepartment, //departmentdropdown에서 선택
