@@ -33,7 +33,7 @@ export default function SignupPage() {
       });
 
       alert("회원가입 완료");
-      console.log("뭔데");
+
       navigate("/login");
     } catch (err) {
       console.error(err);

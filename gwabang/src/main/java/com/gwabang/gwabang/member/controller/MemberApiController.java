@@ -4,6 +4,7 @@ import com.gwabang.gwabang.member.dto.AddMemberRequest;
 import com.gwabang.gwabang.member.service.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
@@ -22,9 +23,9 @@ public class MemberApiController {
     }
 
     @PostMapping("/api/user/signup")
-    public String signup(@RequestBody AddMemberRequest request) {
+    public ResponseEntity<String> signup(@RequestBody AddMemberRequest request) {
         memberService.save(request);
-        return "redirect:/api/user/login";
+        return ResponseEntity.ok("회원가입 성공");
     }
 
     @GetMapping("/api/user/logout")
