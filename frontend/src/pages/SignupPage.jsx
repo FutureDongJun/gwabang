@@ -20,13 +20,20 @@ export default function SignupPage() {
     }
 
     try {
+      const deptRes = await axios.get(`${API_URL}/api/departments/id`, {
+        params: { name: selectedDepartment },
+      });
+      const departmentId = deptRes.data;
+
+      console.log(departmentId);
       const res = await axios.post(`${API_URL}/api/user/signup`, {
         email,
         password,
-        department: selectedDepartment, //departmentdropdown에서 선택
+        departmentId, //departmentdropdown에서 선택
       });
 
       alert("회원가입 완료");
+      console.log("뭔데");
       navigate("/login");
     } catch (err) {
       console.error(err);

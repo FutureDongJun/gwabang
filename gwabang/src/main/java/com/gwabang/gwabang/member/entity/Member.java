@@ -90,4 +90,16 @@ public class Member implements UserDetails {
     public boolean isCredentialsNonExpired() {return true;}
     @Override
     public boolean isEnabled() {return true;}
+
+
+    @PrePersist
+    public void prePersist() {
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        this.updatedAt = LocalDateTime.now();
+    }
 }
