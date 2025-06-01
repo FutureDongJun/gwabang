@@ -8,10 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @Controller
@@ -29,9 +26,18 @@ public class MemberApiController {
     }
 
     @GetMapping("/api/user/logout")
-    public String logout(HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity<String> logout(HttpServletRequest request, HttpServletResponse response) {
         new SecurityContextLogoutHandler().logout(request, response, SecurityContextHolder.getContext().getAuthentication());
 
-        return "redirect:/api/user/login";
+        return ResponseEntity.ok("로그아웃 완료");
     }
+
+    @GetMapping("/api/user/check-email")
+    public ResponseEntity<Boolean> checkEmailDuplicate(@RequestParam String email) {
+
+        boolean isDuplicate = memberService.existsByEmail(email);
+        // 결과 출력
+
+        return ResponseEntity.ok(isDuplicate);
+}
 }

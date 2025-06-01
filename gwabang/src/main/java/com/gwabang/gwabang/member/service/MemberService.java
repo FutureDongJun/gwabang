@@ -11,6 +11,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class MemberService {
@@ -48,4 +50,9 @@ public class MemberService {
         return memberRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("해당 이메일의 사용자가 없습니다."));
     }
+
+    public boolean existsByEmail(String email) {
+        return memberRepository.existsByEmail(email);
+    }
+
 }

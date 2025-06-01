@@ -41,7 +41,7 @@ public class WebSecurityConfig {
             .csrf(csrf -> csrf.disable())
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/auth/**", "/api/user/login", "/api/user/signup","/api/departments","/api/departments/id").permitAll()
+                .requestMatchers("/api/auth/**", "/api/user/login","/api/user/**", "/api/user/signup","/api/departments","/api/departments/id").permitAll()
                 .anyRequest().authenticated()
             )
             .addFilterBefore(new TokenAuthenticationFilter(tokenProvider),
