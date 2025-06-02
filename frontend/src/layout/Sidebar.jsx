@@ -1,11 +1,13 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
+import DepartmentDropdown from "../layout/DepartmentDropdown";
 
 export default function Sidebar() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
   const API_URL = process.env.REACT_APP_API_URL;
+  const [selectedDepartment, setSelectedDepartment] = useState("");
 
   //로그인 상태 유지 (localStorage)
   useEffect(() => {
@@ -28,8 +30,7 @@ export default function Sidebar() {
     } catch (error) {
       alert("로그아웃 실패: 다시 시도해주세요.");
     }
-
-  }
+  };
 
   return (
     <div className="min-h-screen flex bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white">
@@ -60,15 +61,15 @@ export default function Sidebar() {
           </>
         )}
 
-
         <div className="mb-4 text-sm font-medium text-gray-700 dark:text-gray-300">
           학과별 커뮤니티 둘러보기
         </div>
-        <input
-          type="text"
-          placeholder="학과 검색"
-          className="w-full p-2 mb-4 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-[#2A2C36] text-sm"
-        />
+        <div className="mb-5">
+          <DepartmentDropdown
+            selected={selectedDepartment}
+            setSelected={setSelectedDepartment}
+          />
+        </div>
         <ul className="space-y-2 text-sm">
           <li className="flex justify-between">
             <Link to="/article/화학공학과" className="hover:text-orange-600">

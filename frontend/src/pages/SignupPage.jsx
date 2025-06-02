@@ -87,7 +87,7 @@ export default function SignupPage() {
           <div>
             <label
               htmlFor="email"
-              className="block text-sm/6 font-medium text-gray-900"
+              className="block text-sm/6 font-medium text-white"
             >
               이메일 주소
             </label>
@@ -114,7 +114,7 @@ export default function SignupPage() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-900 mb-1">
+            <label className="block text-sm font-medium text-white mb-1">
               학과
             </label>
             <div className="mt-1">
@@ -129,7 +129,7 @@ export default function SignupPage() {
             <div className="flex items-center justify-between">
               <label
                 htmlFor="password"
-                className="block text-sm/6 font-medium text-gray-900"
+                className="block text-sm/6 font-medium text-white"
               >
                 비밀번호
               </label>
@@ -152,7 +152,7 @@ export default function SignupPage() {
             <div className="flex items-center justify-between">
               <label
                 htmlFor="passwordConfirm"
-                className="block text-sm/6 font-medium text-gray-900"
+                className="block text-sm/6 font-medium text-white"
               >
                 비밀번호 확인
               </label>

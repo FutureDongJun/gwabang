@@ -38,7 +38,7 @@ export default function LoginPage() {
           <div>
             <label
               htmlFor="email"
-              className="block text-sm/6 font-medium text-gray-900"
+              className="block text-sm/6 font-medium text-white"
             >
               이메일 주소
             </label>
@@ -60,7 +60,7 @@ export default function LoginPage() {
             <div className="flex items-center justify-between">
               <label
                 htmlFor="password"
-                className="block text-sm/6 font-medium text-gray-900"
+                className="block text-sm/6 font-medium text-white"
               >
                 비밀번호
               </label>

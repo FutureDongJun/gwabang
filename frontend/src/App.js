@@ -9,17 +9,19 @@ import MainPage from "./pages/MainPage";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route element={<Sidebar />}>
-          <Route index element={<MainPage />} />
-          <Route path="/article/:groupCode" element={<DepartmentBoard />} />
-          <Route path="/article/:groupCode/:id" element={<PostDetail />} />
-        </Route>
-        <Route path="/login" element={<LoginPage />}></Route>
-        <Route path="/signup" element={<SignupPage />}></Route>
-      </Routes>
-    </BrowserRouter>
+    <div className="dark:bg-gray-900 min-h-screen">
+      <BrowserRouter>
+        <Routes>
+          <Route element={<Sidebar />}>
+            <Route index element={<MainPage />} />
+            <Route path="/article/:groupCode" element={<DepartmentBoard />} />
+            <Route path="/article/:groupCode/:id" element={<PostDetail />} />
+          </Route>
+          <Route path="/login" element={<LoginPage />}></Route>
+          <Route path="/signup" element={<SignupPage />}></Route>
+        </Routes>
+      </BrowserRouter>
+    </div>
   );
 }
 
