@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router";
+import { useNavigate, Link } from "react-router";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -98,12 +98,12 @@ export default function LoginPage() {
         </form>
 
         <p className="mt-10 text-center text-sm/6 text-gray-500">
-          <a
-            href="/signup"
+          <Link
+            to="/signup"
             className="font-semibold text-orange-600 hover:text-orange-500"
           >
             회원가입
-          </a>
+          </Link>
         </p>
       </div>
     </div>
