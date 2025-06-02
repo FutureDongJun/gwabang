@@ -1,22 +1,65 @@
-import { Link, Outlet } from "react-router-dom";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 
 export default function Sidebar() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
+  const API_URL = process.env.REACT_APP_API_URL;
+
+  //로그인 상태 유지 (localStorage)
+  useEffect(() => {
+    const token = localStorage.getItem("accessToken");
+    setIsLoggedIn(!!token); // 토큰이 있다면 로그인 상태인것임
+  }, []);
+
+  //로그아웃 기능
+  const handleLogout = async () => {
+    try {
+      await axios.get(`${API_URL}/api/user/logout`); // 백엔드 API 호출
+
+      // 토큰 삭제
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
+
+      setIsLoggedIn(false);
+      navigate("/"); // 홈으로 이동
+      alert("로그아웃 완료");
+    } catch (error) {
+      alert("로그아웃 실패: 다시 시도해주세요.");
+    }
+
+  }
+
   return (
     <div className="min-h-screen flex bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white">
       {/* 좌측 사이드바 */}
       <aside className="w-64 p-6 bg-white dark:bg-[#1E2028] shadow-md">
         <div className="text-xl font-bold mb-6">학과방</div>
-        <Link to={"/login"}>
-          <button className="w-full mb-4 py-2 bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-semibold">
-            로그인
-          </button>
-        </Link>
 
-        <Link to={"/signup"}>
-          <button className="w-full mb-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg font-semibold">
-            회원가입
+        {isLoggedIn ? (
+          <button
+            onClick={handleLogout}
+            className="w-full mb-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg font-semibold"
+          >
+            로그아웃
           </button>
-        </Link>
+        ) : (
+          <>
+            <Link to={"/login"}>
+              <button className="w-full mb-4 py-2 bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-semibold">
+                로그인
+              </button>
+            </Link>
+
+            <Link to={"/signup"}>
+              <button className="w-full mb-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg font-semibold">
+                회원가입
+              </button>
+            </Link>
+          </>
+        )}
+
 
         <div className="mb-4 text-sm font-medium text-gray-700 dark:text-gray-300">
           학과별 커뮤니티 둘러보기

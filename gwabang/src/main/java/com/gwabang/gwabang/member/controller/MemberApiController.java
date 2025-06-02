@@ -1,6 +1,7 @@
 package com.gwabang.gwabang.member.controller;
 
 import com.gwabang.gwabang.member.dto.AddMemberRequest;
+import com.gwabang.gwabang.member.dto.MemberResponse;
 import com.gwabang.gwabang.member.service.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -39,5 +40,13 @@ public class MemberApiController {
         // 결과 출력
 
         return ResponseEntity.ok(isDuplicate);
-}
+    }
+
+    @GetMapping("/api/user/me")
+    public ResponseEntity<MemberResponse> getCurrentUser(@RequestHeader("Authorization") String token) {
+        String accessToken = token.replace("Bearer ", "");
+        MemberResponse userInfo = memberService.getCurrentUserInfo(accessToken);
+        return ResponseEntity.ok(userInfo);
+    }
+
 }

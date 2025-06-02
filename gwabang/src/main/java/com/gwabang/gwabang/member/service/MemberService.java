@@ -3,8 +3,10 @@ package com.gwabang.gwabang.member.service;
 import com.gwabang.gwabang.department.entity.Department;
 import com.gwabang.gwabang.department.repository.DepartmentRepository;
 import com.gwabang.gwabang.member.dto.AddMemberRequest;
+import com.gwabang.gwabang.member.dto.MemberResponse;
 import com.gwabang.gwabang.member.entity.Member;
 import com.gwabang.gwabang.member.repository.MemberRepository;
+import com.gwabang.gwabang.security.config.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -13,12 +15,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@RequiredArgsConstructor
 @Service
+@RequiredArgsConstructor
 public class MemberService {
 
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtTokenProvider jwtTokenProvider;
 
     @Autowired
     private final DepartmentRepository departmentRepository;
@@ -55,4 +58,10 @@ public class MemberService {
         return memberRepository.existsByEmail(email);
     }
 
+    public MemberResponse getCurrentUserInfo(String accessToken) {
+        Long userId = jwtTokenProvider.getUserIdFromToken(accessToken);
+        Member member = memberRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다."));
+        return new MemberResponse(member);
+    }
 }

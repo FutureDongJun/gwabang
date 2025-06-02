@@ -28,22 +28,29 @@ public class AuthController {
     private final MemberService memberService;
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
         Authentication authentication = authenticationManager.authenticate(
-            new UsernamePasswordAuthenticationToken(
-                loginRequest.getEmail(),
-                loginRequest.getPassword()
-            )
+                new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
         );
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        
-        Member member = memberService.findByEmail(loginRequest.getEmail());
-        String accessToken = tokenProvider.generateToken(member, Duration.ofMinutes(30));
+        Member member = memberService.findByEmail(request.getEmail());
+
+        String accessToken = tokenProvider.generateToken(member, Duration.ofHours(2));
         String refreshToken = tokenProvider.generateToken(member, Duration.ofDays(7));
-        
-        refreshTokenService.saveRefreshToken(member.getId(), refreshToken);
+
+        refreshTokenService.saveOrUpdate(member.getId(), refreshToken);
 
         return ResponseEntity.ok(new LoginResponse(accessToken, refreshToken));
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<Void> logout() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated()) {
+            Member member = memberService.findByEmail(authentication.getName());
+            refreshTokenService.deleteRefreshToken(member.getId());
+        }
+        return ResponseEntity.ok().build();
     }
 } 
