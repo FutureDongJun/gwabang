@@ -39,7 +39,7 @@ public class TokenProvider {
                 .setIssuer(jwtProperties.getIssuer()) // 내용 issuer
                 .setIssuedAt(now)
                 .setExpiration(expiryDate)
-                .setSubject(member.getEmail())
+                .setSubject(String.valueOf(member.getId()))
                 .claim("id", member.getId()) // 클레임 id : 멤버 ID
                 .signWith(key)
                 .compact();

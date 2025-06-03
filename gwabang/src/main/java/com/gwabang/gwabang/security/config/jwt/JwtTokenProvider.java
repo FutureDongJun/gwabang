@@ -16,12 +16,13 @@ public class JwtTokenProvider {
     private String secretKey;
 
     public Long getUserIdFromToken(String token) {
-        Claims claims = Jwts.parserBuilder()
+        String subject = Jwts.parserBuilder()
                 .setSigningKey(secretKey.getBytes(StandardCharsets.UTF_8))
                 .build()
                 .parseClaimsJws(token)
-                .getBody();
+                .getBody()
+                .getSubject();
 
-        return Long.parseLong(claims.getSubject());
+        return Long.parseLong(subject);
     }
 }

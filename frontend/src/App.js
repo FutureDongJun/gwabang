@@ -6,6 +6,7 @@ import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import DepartmentBoard from "./pages/DepartmentBoard";
 import MainPage from "./pages/MainPage";
+import Profile from "./pages/Profile";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
             <Route index element={<MainPage />} />
             <Route path="/article/:groupCode" element={<DepartmentBoard />} />
             <Route path="/article/:groupCode/:id" element={<PostDetail />} />
+            <Route path="/user/me" element={<Profile/>} />
           </Route>
           <Route path="/login" element={<LoginPage />}></Route>
           <Route path="/signup" element={<SignupPage />}></Route>

@@ -45,6 +45,7 @@ export default function Sidebar() {
           >
             로그아웃
           </button>
+
         ) : (
           <>
             <Link to={"/login"}>
@@ -60,6 +61,12 @@ export default function Sidebar() {
             </Link>
           </>
         )}
+        
+        <Link to={"/user/me"}>
+          <button className="w-full mb-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg font-semibold">
+            내 정보 보기
+          </button>
+        </Link>
 
         <div className="mb-4 text-sm font-medium text-gray-700 dark:text-gray-300">
           학과별 커뮤니티 둘러보기
