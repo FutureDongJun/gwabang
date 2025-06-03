@@ -44,6 +44,8 @@ public class MemberApiController {
 
     @GetMapping("/api/user/me")
     public ResponseEntity<MemberResponse> getCurrentUser(@RequestHeader("Authorization") String token) {
+        System.out.println("✅ [/api/user/me] 요청 도착");
+        System.out.println("📌 받은 Authorization 헤더: " + token);
         String accessToken = token.replace("Bearer ", "");
         MemberResponse userInfo = memberService.getCurrentUserInfo(accessToken);
         return ResponseEntity.ok(userInfo);

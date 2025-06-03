@@ -60,8 +60,9 @@ public class MemberService {
 
     public MemberResponse getCurrentUserInfo(String accessToken) {
         Long userId = jwtTokenProvider.getUserIdFromToken(accessToken);
-        Member member = memberRepository.findById(userId)
+        Member member = memberRepository.findByIdWithDepartment(userId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다."));
+
         return new MemberResponse(member);
     }
 }
