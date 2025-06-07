@@ -18,4 +18,10 @@ public class DepartmentService {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 학과입니다: " + name));
         return department.getId();
     }
+
+    public Integer getDepartmentGroupCodeByName(String name) {
+        Department department = departmentRepository.findByName(name)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 학과입니다: " + name));
+        return department.getDepartmentGroup().getCode();
+    }
 }

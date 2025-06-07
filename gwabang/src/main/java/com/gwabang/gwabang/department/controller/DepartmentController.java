@@ -26,4 +26,11 @@ public class DepartmentController {
         Long departmentId = departmentService.getDepartmentIdByName(name);
         return ResponseEntity.ok(departmentId);
     }
+
+    @GetMapping("/name")
+    public ResponseEntity<Integer> getDepartmentGroupCode(@RequestParam String name) {
+        Integer groupCode = departmentService.getDepartmentGroupCodeByName(name);
+        return ResponseEntity.ok(groupCode);
+    }
+
 }

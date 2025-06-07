@@ -11,6 +11,28 @@ export default function Sidebar() {
   const [selectedDepartment, setSelectedDepartment] = useState("");
 
   //로그인 상태 유지 (localStorage)
+
+  const handleMoveToDepartment = async () => {
+    if (!selectedDepartment) {
+      alert("학과를 선택해주세요!");
+      return;
+    }
+
+    try {
+      const token = localStorage.getItem("accessToken");
+      const response = await axios.get(`${API_URL}/api/departments/name`, {
+        params: { name: selectedDepartment },
+        headers: {
+          Authorization: `Bearer ${token}`, // 필요 없으면 생략 가능
+        },
+      });
+      const groupCode = response.data;
+      navigate(`/article/${groupCode}`);
+    } catch (error) {
+      console.error("학과 groupCode 불러오기 실패:", error);
+      alert("학과 이동 중 오류가 발생했습니다.");
+    }
+  };
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
     setIsLoggedIn(!!token); // 토큰이 있다면 로그인 상태인것임
@@ -78,11 +100,13 @@ export default function Sidebar() {
           </>
         )}
 
-        <Link to={"/user/me"}>
-          <button className="w-full mb-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg font-semibold">
-            내 정보 보기
-          </button>
-        </Link>
+        {isLoggedIn && (
+          <Link to={"/user/me"}>
+            <button className="w-full mb-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg font-semibold">
+              내 정보 보기
+            </button>
+          </Link>
+        )}
 
         <div className="mb-4 text-sm font-medium text-gray-700 dark:text-gray-300">
           학과별 커뮤니티 둘러보기
@@ -93,13 +117,7 @@ export default function Sidebar() {
             setSelected={setSelectedDepartment}
           />
           <button
-            onClick={() => {
-              if (selectedDepartment) {
-                navigate(`/article/${selectedDepartment}`);
-              } else {
-                alert("학과를 선택해주세요!");
-              }
-            }}
+            onClick={handleMoveToDepartment}
             className="mt-2 w-full py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-semibold"
           >
             선택한 학과 게시판으로 이동
