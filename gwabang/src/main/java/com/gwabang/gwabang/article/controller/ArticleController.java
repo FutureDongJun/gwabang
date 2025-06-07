@@ -19,13 +19,15 @@ public class ArticleController {
     private final ArticleService articleService;
 
     @GetMapping("/list")
-            public ResponseEntity<List<ArticleListItemDto>> getArticlesByGroupCode(
+    public ResponseEntity<List<ArticleListItemDto>> getArticlesByGroupCode(
             @PathVariable String groupCode
+
     ) {
+        System.out.println("🔍 [Controller] groupCode: " + groupCode); // ✅ 여기!
+
         List<ArticleListItemDto> articles = articleService.getArticlesByGroupCode(groupCode);
         return ResponseEntity.ok(articles);
     }
-
 
     @PostMapping("/write")
     public ResponseEntity<ArticleResponse> createArticle(
@@ -37,7 +39,7 @@ public class ArticleController {
         String accessToken = authorizationHeader.startsWith("Bearer ")
                 ? authorizationHeader.substring(7)
                 : authorizationHeader;
-        System.out.println("dto = " + dto);
+        //System.out.println("dto = " + dto);
 
         ArticleResponse result = articleService.createArticle(groupCode, dto, accessToken);
         return ResponseEntity.ok(result);

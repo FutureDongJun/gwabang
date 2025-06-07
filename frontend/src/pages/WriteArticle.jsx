@@ -54,28 +54,28 @@ export default function WriteArticle() {
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-6">
-      <h2 className="text-2xl font-bold mb-4">{groupCode} 게시글 작성</h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
+    <div className="w-full min-h-screen px-16 py-10">
+      <h2 className="text-3xl font-bold mb-8">{groupCode} 게시글 작성</h2>
+      <form onSubmit={handleSubmit} className="space-y-6">
         <div>
-          <label className="block text-sm font-medium mb-1">제목</label>
+          <label className="block text-lg font-semibold mb-2">제목</label>
           <input
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             required
-            className="w-full border border-gray-300 rounded px-3 py-2"
+            className="w-full border border-gray-300 rounded-lg px-6 py-4 text-black text-lg shadow-sm bg-white"
             placeholder="제목을 입력하세요"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium mb-1">내용</label>
+          <label className="block text-lg font-semibold mb-2">내용</label>
           <textarea
             value={content}
             onChange={(e) => setContent(e.target.value)}
             required
-            className="w-full border border-gray-300 rounded px-3 py-2 h-40"
+            className="w-full border border-gray-300 rounded-lg px-6 py-4 h-[400px] text-black text-lg shadow-sm bg-white"
             placeholder="내용을 입력하세요"
           />
         </div>
@@ -83,9 +83,9 @@ export default function WriteArticle() {
         <div className="flex justify-end">
           <button
             type="submit"
-            className="bg-green-500 hover:bg-green-600 text-white font-semibold px-6 py-2 rounded"
+            className="bg-green-600 hover:bg-green-700 text-white font-bold px-8 py-3 rounded-lg text-lg shadow-md"
           >
-            작성하기
+            ✏️ 작성하기
           </button>
         </div>
       </form>

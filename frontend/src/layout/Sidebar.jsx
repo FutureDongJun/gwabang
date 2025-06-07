@@ -92,6 +92,18 @@ export default function Sidebar() {
             selected={selectedDepartment}
             setSelected={setSelectedDepartment}
           />
+          <button
+            onClick={() => {
+              if (selectedDepartment) {
+                navigate(`/article/${selectedDepartment}`);
+              } else {
+                alert("학과를 선택해주세요!");
+              }
+            }}
+            className="mt-2 w-full py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-semibold"
+          >
+            선택한 학과 게시판으로 이동
+          </button>
         </div>
         <ul className="space-y-2 text-sm">
           <li className="flex justify-between">

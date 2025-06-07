@@ -6,13 +6,42 @@ export default function DepartmentBoard() {
   const { groupCode } = useParams(); // url에서 학과 코드 추출하는 거임
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [departmentGroupName, setDepartmentGroupName] = useState("");
   const navigate = useNavigate();
+  const API_URL = process.env.REACT_APP_API_URL;
+
+  useEffect(() => {
+    const fetchDepartmentGroupName = async () => {
+      try {
+        const res = await axios.get(
+          `${API_URL}/api/departmentGroup/${groupCode}`
+        );
+        setDepartmentGroupName(res.data);
+        console.log(res);
+      } catch (error) {
+        console.error("학과그룹이름 조회 실패", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchDepartmentGroupName();
+  }, [groupCode]);
 
   useEffect(() => {
     const fetchArticles = async () => {
       try {
-        const res = await axios.get(`/api/article/${groupCode}/list`);
+        console.log("일단오긴함");
+        const res = await axios.get(
+          `${API_URL}/api/article/${groupCode}/list`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
+          }
+        );
         setArticles(res.data);
+        console.log(res);
       } catch (error) {
         console.error("게시글 목록 조회 실패", error);
       } finally {
@@ -28,7 +57,7 @@ export default function DepartmentBoard() {
   return (
     <div className="p-6">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">{groupCode} 게시판</h1>
+        <h1 className="text-2xl font-bold">{departmentGroupName} 게시판</h1>
 
         <div className="ml-4">
           <button

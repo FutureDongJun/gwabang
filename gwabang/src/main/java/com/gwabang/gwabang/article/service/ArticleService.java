@@ -42,8 +42,8 @@ public class ArticleService {
         if (!userGroupCode.equals(groupCode)) {
             throw new RuntimeException("접근 권한 없음: 게시판 접근 불가");
         }
-        System.out.println("usergroupcode:"+userGroupCode + " gc:"+groupCode);
-        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!"+dto.getCategoryId());
+        //System.out.println("usergroupcode:"+userGroupCode + " gc:"+groupCode);
+        //System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!"+dto.getCategoryId());
 
 
         // ✅ 카테고리 조회
@@ -58,6 +58,7 @@ public class ArticleService {
                 .title(dto.getTitle())
                 .content(dto.getContent())
                 .createdAt(LocalDateTime.now())
+                .groupCode(groupCode)
                 .build();
 
         articleRepository.save(article);
@@ -101,8 +102,14 @@ public class ArticleService {
 
         articleRepository.delete(article);
     }
+
     public List<ArticleListItemDto> getArticlesByGroupCode(String groupCode) {
+        Integer code = Integer.valueOf(groupCode);
+        System.out.println("🔍 [Service] Parsed groupCode as Integer: " + code); // ✅ 여기!
+
         List<Article> articles = articleRepository.findByGroupCode(groupCode);
+        System.out.println("📦 [Service] Retrieved articles: " + articles.size()); // ✅ 여기!
+
         return articles.stream()
                 .map(article -> new ArticleListItemDto(
                         article.getId(),

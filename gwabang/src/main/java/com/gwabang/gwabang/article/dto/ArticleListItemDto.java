@@ -1,5 +1,6 @@
 package com.gwabang.gwabang.article.dto;
 
+import com.gwabang.gwabang.category.entity.Category;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
