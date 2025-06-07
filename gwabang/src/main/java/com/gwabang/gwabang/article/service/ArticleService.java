@@ -1,13 +1,12 @@
 package com.gwabang.gwabang.article.service;
 
+import com.gwabang.gwabang.article.dto.ArticleListItemDto;
 import com.gwabang.gwabang.article.dto.ArticleRequest;
 import com.gwabang.gwabang.article.dto.ArticleResponse;
 import com.gwabang.gwabang.article.entity.Article;
 import com.gwabang.gwabang.article.repository.ArticleRepository;
 import com.gwabang.gwabang.category.entity.Category;
 import com.gwabang.gwabang.category.repository.CategoryRepository;
-import com.gwabang.gwabang.departmentgroup.entity.DepartmentGroup;
-import com.gwabang.gwabang.departmentgroup.repository.DepartmentGroupRepository;
 import com.gwabang.gwabang.member.entity.Member;
 import com.gwabang.gwabang.member.repository.MemberRepository;
 import com.gwabang.gwabang.security.config.jwt.TokenProvider;
@@ -16,6 +15,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -29,21 +30,26 @@ public class ArticleService {
     @Transactional
     public ArticleResponse createArticle(String groupCode, ArticleRequest dto, String accessToken) {
         // ✅ accessToken에서 email 추출
-        String email = tokenProvider.getEmailFromToken(accessToken);
+        Long memberId = Long.parseLong(tokenProvider.getEmailFromToken(accessToken));
+
 
         // ✅ 이메일로 Member 조회
-        Member member = memberRepository.findByEmail(email)
+        Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new RuntimeException("회원 정보 없음"));
 
         // ✅ 학과 그룹 검사
-        String userGroupCode = member.getDepartment().getDepartmentGroup().getName();
+        String userGroupCode = String.valueOf(member.getDepartment().getDepartmentGroup().getCode());
         if (!userGroupCode.equals(groupCode)) {
             throw new RuntimeException("접근 권한 없음: 게시판 접근 불가");
         }
+        System.out.println("usergroupcode:"+userGroupCode + " gc:"+groupCode);
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!"+dto.getCategoryId());
+
 
         // ✅ 카테고리 조회
-        Category category = categoryRepository.findById(dto.getCategoryId())
-                .orElseThrow(() -> new RuntimeException("카테고리 없음"));
+        Integer code = Integer.valueOf(groupCode);
+        Category category = categoryRepository.findByDepartmentGroup_Code(code)
+                .orElseThrow(() -> new RuntimeException("카테고리를 찾을 수 없습니다."));
 
         // ✅ 게시글 저장
         Article article = Article.builder()
@@ -95,5 +101,16 @@ public class ArticleService {
 
         articleRepository.delete(article);
     }
+    public List<ArticleListItemDto> getArticlesByGroupCode(String groupCode) {
+        List<Article> articles = articleRepository.findByGroupCode(groupCode);
+        return articles.stream()
+                .map(article -> new ArticleListItemDto(
+                        article.getId(),
+                        article.getTitle(),
+                        article.getCreatedAt()
+                ))
+                .collect(Collectors.toList());
+    }
+
 
 }

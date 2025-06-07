@@ -18,7 +18,7 @@ public class RefreshToken {
     @Column(name = "member_id", nullable = false, unique = true)
     private Long memberId;
 
-    @Column(name = "refresh_token", nullable = false)
+    @Column(name = "refresh_token", nullable = false,length = 1000)
     private String refreshToken;
 
     public RefreshToken(Long memberId, String refreshToken) {

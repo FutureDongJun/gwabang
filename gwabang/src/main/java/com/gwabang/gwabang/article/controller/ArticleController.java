@@ -1,5 +1,6 @@
 package com.gwabang.gwabang.article.controller;
 
+import com.gwabang.gwabang.article.dto.ArticleListItemDto;
 import com.gwabang.gwabang.article.dto.ArticleRequest;
 import com.gwabang.gwabang.article.dto.ArticleResponse;
 import com.gwabang.gwabang.article.service.ArticleService;
@@ -7,14 +8,26 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/article/{groupCode}")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:3000")
 public class ArticleController {
 
     private final ArticleService articleService;
 
-    @PostMapping("/{id}")
+    @GetMapping("/list")
+            public ResponseEntity<List<ArticleListItemDto>> getArticlesByGroupCode(
+            @PathVariable String groupCode
+    ) {
+        List<ArticleListItemDto> articles = articleService.getArticlesByGroupCode(groupCode);
+        return ResponseEntity.ok(articles);
+    }
+
+
+    @PostMapping("/write")
     public ResponseEntity<ArticleResponse> createArticle(
             @PathVariable String groupCode,
             @RequestBody ArticleRequest dto,
@@ -24,6 +37,7 @@ public class ArticleController {
         String accessToken = authorizationHeader.startsWith("Bearer ")
                 ? authorizationHeader.substring(7)
                 : authorizationHeader;
+        System.out.println("dto = " + dto);
 
         ArticleResponse result = articleService.createArticle(groupCode, dto, accessToken);
         return ResponseEntity.ok(result);

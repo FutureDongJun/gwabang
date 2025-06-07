@@ -24,7 +24,11 @@ public class TokenService {
         Long memberId = Long.valueOf(refreshTokenService.findByRefreshToken(refreshToken).getMemberId());
         Member member = memberService.findById(memberId);
 
+        System.out.println("🧪 [디버깅] 토큰에서 추출한 memberId: " + memberId);
+
+        System.out.println("🧪 [디버깅] 조회된 회원: " + member.getEmail()); // 아마 여기 못 감
 
         return tokenProvider.generateToken(member, Duration.ofHours(2));
     }
+
 }

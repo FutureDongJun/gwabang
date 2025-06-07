@@ -5,6 +5,7 @@ import DepartmentDropdown from "../layout/DepartmentDropdown";
 
 export default function Sidebar() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userDepartment, setUserDepartment] = useState("");
   const navigate = useNavigate();
   const API_URL = process.env.REACT_APP_API_URL;
   const [selectedDepartment, setSelectedDepartment] = useState("");
@@ -14,6 +15,22 @@ export default function Sidebar() {
     const token = localStorage.getItem("accessToken");
     setIsLoggedIn(!!token); // 토큰이 있다면 로그인 상태인것임
   }, []);
+  useEffect(() => {
+    const token = localStorage.getItem("accessToken");
+    setIsLoggedIn(!!token);
+    if (token) {
+      axios
+        .get(`${API_URL}/api/user/me`, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then((res) => {
+          setUserDepartment(res.data.departmentName);
+        })
+        .catch(() => {
+          setUserDepartment("");
+        });
+    }
+  }, [API_URL]);
 
   //로그아웃 기능
   const handleLogout = async () => {
@@ -45,7 +62,6 @@ export default function Sidebar() {
           >
             로그아웃
           </button>
-
         ) : (
           <>
             <Link to={"/login"}>
@@ -61,7 +77,7 @@ export default function Sidebar() {
             </Link>
           </>
         )}
-        
+
         <Link to={"/user/me"}>
           <button className="w-full mb-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg font-semibold">
             내 정보 보기
@@ -79,7 +95,7 @@ export default function Sidebar() {
         </div>
         <ul className="space-y-2 text-sm">
           <li className="flex justify-between">
-            <Link to="/article/화학공학과" className="hover:text-orange-600">
+            <Link to="/article/101" className="hover:text-orange-600">
               화학공학과 <span className="text-gray-400">77,506명</span>
             </Link>
           </li>

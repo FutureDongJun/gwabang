@@ -7,6 +7,7 @@ import SignupPage from "./pages/SignupPage";
 import DepartmentBoard from "./pages/DepartmentBoard";
 import MainPage from "./pages/MainPage";
 import Profile from "./pages/Profile";
+import WriteArticle from "./pages/WriteArticle";
 
 function App() {
   return (
@@ -17,7 +18,11 @@ function App() {
             <Route index element={<MainPage />} />
             <Route path="/article/:groupCode" element={<DepartmentBoard />} />
             <Route path="/article/:groupCode/:id" element={<PostDetail />} />
-            <Route path="/user/me" element={<Profile/>} />
+            <Route path="/user/me" element={<Profile />} />
+            <Route
+              path="/article/:groupCode/write"
+              element={<WriteArticle />}
+            />
           </Route>
           <Route path="/login" element={<LoginPage />}></Route>
           <Route path="/signup" element={<SignupPage />}></Route>

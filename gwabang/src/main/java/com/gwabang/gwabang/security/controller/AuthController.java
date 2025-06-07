@@ -38,6 +38,9 @@ public class AuthController {
 
         String accessToken = tokenProvider.generateToken(member, Duration.ofHours(2));
         String refreshToken = tokenProvider.generateToken(member, Duration.ofDays(7));
+        System.out.println("✅ 로그인 API 호출됨");
+        System.out.println("✅ accessToken: " + accessToken);
+        System.out.println("✅ refreshToken: " + refreshToken);
 
         refreshTokenService.saveOrUpdate(member.getId(), refreshToken);
 
