@@ -2,6 +2,8 @@ package com.gwabang.gwabang.department.controller;
 
 import com.gwabang.gwabang.department.repository.DepartmentRepository;
 import com.gwabang.gwabang.department.service.DepartmentService;
+import com.gwabang.gwabang.department.dto.DepartmentStatsDto;
+import com.gwabang.gwabang.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +18,7 @@ public class DepartmentController {
 
     private final DepartmentRepository departmentRepository;
     private final DepartmentService departmentService;
+    private final MemberService memberService;
     @GetMapping
     public List<String> getDepartmentNames() {
         return departmentRepository.findAllDepartmentNames();
@@ -32,5 +35,12 @@ public class DepartmentController {
         Integer groupCode = departmentService.getDepartmentGroupCodeByName(name);
         return ResponseEntity.ok(groupCode);
     }
+
+    @GetMapping("/popular")
+    public ResponseEntity<List<DepartmentStatsDto>> getPopularDepartments() {
+        System.out.println("!!!!!!!!!!!!!!!!!!!온다");
+        return ResponseEntity.ok(memberService.getTop3Departments());
+    }
+
 
 }

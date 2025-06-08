@@ -10,6 +10,24 @@ export default function WriteArticle() {
   const [content, setContent] = useState("");
   const [categoryId, setCategoryId] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [departmentGroupName, setDepartmentGroupName] = useState("");
+  useEffect(() => {
+    const fetchDepartmentGroupName = async () => {
+      try {
+        const res = await axios.get(
+          `${API_URL}/api/departmentGroup/${groupCode}`
+        );
+        setDepartmentGroupName(res.data);
+        console.log(res);
+      } catch (error) {
+        console.error("학과그룹이름 조회 실패", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchDepartmentGroupName();
+  }, [groupCode]);
   // 🚀 컴포넌트가 마운트될 때 categoryId를 먼저 가져오기
   useEffect(() => {
     const fetchCategoryId = async () => {
@@ -49,13 +67,17 @@ export default function WriteArticle() {
       navigate(`/article/${groupCode}`);
     } catch (err) {
       console.error("게시글 작성 실패:", err);
-      alert("게시글 작성에 실패했습니다.");
+      const errorMessage =
+        err.response?.data?.message || "게시글 작성에 실패했습니다.";
+      alert(errorMessage);
     }
   };
 
   return (
     <div className="w-full min-h-screen px-16 py-10">
-      <h2 className="text-3xl font-bold mb-8">{groupCode} 게시글 작성</h2>
+      <h2 className="text-3xl font-bold mb-8">
+        {departmentGroupName} 게시글 작성
+      </h2>
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>
           <label className="block text-lg font-semibold mb-2">제목</label>

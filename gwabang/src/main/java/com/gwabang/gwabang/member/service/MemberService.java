@@ -3,12 +3,14 @@ package com.gwabang.gwabang.member.service;
 import com.gwabang.gwabang.department.entity.Department;
 import com.gwabang.gwabang.department.repository.DepartmentRepository;
 import com.gwabang.gwabang.member.dto.AddMemberRequest;
+import com.gwabang.gwabang.department.dto.DepartmentStatsDto;
 import com.gwabang.gwabang.member.dto.MemberResponse;
 import com.gwabang.gwabang.member.entity.Member;
 import com.gwabang.gwabang.member.repository.MemberRepository;
 import com.gwabang.gwabang.security.config.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -65,4 +67,9 @@ public class MemberService {
 
         return new MemberResponse(member);
     }
+
+    public List<DepartmentStatsDto> getTop3Departments() {
+        return memberRepository.findTopDepartmentsByMemberCount(PageRequest.of(0, 3));
+    }
+
 }

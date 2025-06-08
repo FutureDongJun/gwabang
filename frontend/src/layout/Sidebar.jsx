@@ -9,7 +9,7 @@ export default function Sidebar() {
   const navigate = useNavigate();
   const API_URL = process.env.REACT_APP_API_URL;
   const [selectedDepartment, setSelectedDepartment] = useState("");
-
+  const [popularDepartments, setPopularDepartments] = useState([]);
   //로그인 상태 유지 (localStorage)
 
   const handleMoveToDepartment = async () => {
@@ -33,6 +33,21 @@ export default function Sidebar() {
       alert("학과 이동 중 오류가 발생했습니다.");
     }
   };
+
+  useEffect(() => {
+    const fetchPopularDepartments = async () => {
+      try {
+        console.log("에베베");
+        const res = await axios.get(`${API_URL}/api/departments/popular`);
+        setPopularDepartments(res.data);
+      } catch (error) {
+        console.error("인기 학과 불러오기 실패", error);
+      }
+    };
+
+    fetchPopularDepartments();
+  }, []);
+
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
     setIsLoggedIn(!!token); // 토큰이 있다면 로그인 상태인것임
@@ -124,22 +139,19 @@ export default function Sidebar() {
           </button>
         </div>
         <ul className="space-y-2 text-sm">
-          <li className="flex justify-between">
-            <Link to="/article/101" className="hover:text-orange-600">
-              화학공학과 <span className="text-gray-400">77,506명</span>
-            </Link>
-          </li>
-          <li className="flex justify-between">
-            <Link to="/article/컴퓨터공학과" className="hover:text-orange-600">
-              컴퓨터공학과 <span className="text-gray-400">70,457명</span>
-            </Link>
-          </li>
-          <li className="flex justify-between">
-            <Link to="/article/심리학과" className="hover:text-orange-600">
-              심리학과 <span className="text-gray-400">68,798명</span>
-            </Link>
-          </li>
-          {/* 나중에 학과 검색 인풋창이랑 과나열한 것들 수정해서 경로로 이동하는 식으로 해야함 */}
+          {popularDepartments.map((dept) => (
+            <li key={dept.departmentId} className="flex justify-between">
+              <Link
+                to={`/article/${dept.departmentId}`}
+                className="hover:text-orange-600"
+              >
+                {dept.departmentName}{" "}
+                <span className="text-gray-400">
+                  {dept.memberCount.toLocaleString()}명
+                </span>
+              </Link>
+            </li>
+          ))}
         </ul>
       </aside>
       <Outlet />

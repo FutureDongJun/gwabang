@@ -1,6 +1,8 @@
 package com.gwabang.gwabang.member.repository;
 
 import com.gwabang.gwabang.member.entity.Member;
+import com.gwabang.gwabang.department.dto.DepartmentStatsDto;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -16,4 +18,13 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     @Query("SELECT m FROM Member m JOIN FETCH m.department WHERE m.id = :id")
     Optional<Member> findByIdWithDepartment(@Param("id") Long id);
+
+
+    @Query("SELECT new com.gwabang.gwabang.department.dto.DepartmentStatsDto(d.id, d.name, COUNT(m)) " +
+            "FROM Member m JOIN m.department d " +
+            "GROUP BY d.id, d.name " +
+            "ORDER BY COUNT(m) DESC")
+    List<DepartmentStatsDto> findTopDepartmentsByMemberCount(Pageable pageable);
+
 }
+
