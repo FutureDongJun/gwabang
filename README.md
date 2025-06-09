@@ -29,21 +29,8 @@
 
 ## 🗂️ 폴더 구조
 
-gwabang/
-├── frontend/ # 리액트 앱
-│ ├── public/
-│ ├── src/
-│ │ ├── pages/ # 로그인, 회원가입, 글쓰기 등
-│ │ ├── components/
-│ │ └── App.jsx
-│ └── tailwind.config.js
-├── gwabang-backend/ # 스프링 부트 앱
-│ ├── src/main/java/com/gwabang
-│ │ ├── member/
-│ │ ├── article/
-│ │ ├── security/
-│ │ └── department/
-│ └── resources/application.properties
+![image](https://github.com/user-attachments/assets/c3ec2ca0-fa32-4248-ab5b-2c96037ced5a)
+
 
 ---
 
