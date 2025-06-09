@@ -21,7 +21,7 @@
 
 | 구성 | 사용 기술 |
 |------|-----------|
-| Frontend | React 18, React Router v6, Axios, Tailwind CSS |
+| Frontend | React 19, React Router v7, Axios, Tailwind CSS |
 | Backend | Spring Boot 3.4.5, Spring Security, JPA, JWT, MySQL |
 | 기타 | Vite, ESLint, dotenv, Postman (API 테스트) |
 
