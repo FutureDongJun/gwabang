@@ -90,7 +90,14 @@ export default function Sidebar() {
     <div className="min-h-screen flex bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white">
       {/* 좌측 사이드바 */}
       <aside className="w-64 p-6 bg-white dark:bg-[#1E2028] shadow-md">
-        <div className="text-xl font-bold mb-6">학과방</div>
+        <div className="flex items-center space-x-2 mb-6">
+          <img src="/images/Gwabang_logo.jpg" alt="로고" className="w-6 h-6"/>
+          <span>
+            <Link to={"/"}>
+              학과방
+            </Link>
+          </span>
+        </div>
 
         {isLoggedIn ? (
           <button
