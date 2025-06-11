@@ -8,6 +8,7 @@ import DepartmentBoard from "./pages/DepartmentBoard";
 import MainPage from "./pages/MainPage";
 import Profile from "./pages/Profile";
 import WriteArticle from "./pages/WriteArticle";
+import EditPostPage from "./pages/EditPostPage";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
             <Route index element={<MainPage />} />
             <Route path="/article/:groupCode" element={<DepartmentBoard />} />
             <Route path="/article/:groupCode/:id" element={<PostDetail />} />
+            <Route path="/article/:groupCode/:id/edit" element={<EditPostPage />} />
             <Route path="/user/me" element={<Profile />} />
             <Route
               path="/article/:groupCode/write"
