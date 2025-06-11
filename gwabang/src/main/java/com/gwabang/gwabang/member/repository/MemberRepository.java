@@ -19,6 +19,8 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     @Query("SELECT m FROM Member m JOIN FETCH m.department WHERE m.id = :id")
     Optional<Member> findByIdWithDepartment(@Param("id") Long id);
 
+
+    List<Member> findAllByNicknameIsNull();
     boolean existsByNickname(String nickname);
 
 

@@ -12,5 +12,6 @@ public class ArticleResponse {
     private String title;
     private String content;
     private LocalDateTime createdAt;
+    private String nickname;
 
 }

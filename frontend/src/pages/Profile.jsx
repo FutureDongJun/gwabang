@@ -34,6 +34,9 @@ export default function Profile() {
         <p>
           <strong>학과: </strong> {user.departmentName}
         </p>
+        <p>
+          <strong>닉네임: </strong> {user.nickname}
+        </p>
       </div>
       <Outlet />
     </section>

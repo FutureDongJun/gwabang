@@ -14,6 +14,7 @@ export default function PostDetail() {
     try {
       const res = await axios.get(`${API_URL}/api/article/${groupCode}/${id}`);
       setPost(res.data);
+      console.log(res.data);
     } catch (err) {
       setError("게시글을 불러오는데 실패했습니다.");
     } finally {
@@ -53,7 +54,7 @@ export default function PostDetail() {
     <div>
       <h1 className="text-2xl font-bold mb-2">{post.title}</h1>
       <div className="text-sm text-gray-500 mb-4">
-        {post.author} • {new Date(post.createdAt).toLocaleDateString()}
+        {post.nickname} • {new Date(post.createdAt).toLocaleDateString()}
       </div>
       <div className="prose prose-sm dark:prose-invert max-w-none mb-4">
         <p>{post.content}</p>

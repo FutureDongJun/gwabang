@@ -80,4 +80,18 @@ public class MemberService {
         return memberRepository.findTopDepartmentsByMemberCount(PageRequest.of(0, 3));
     }
 
+    @Transactional
+    public void fillEmptyNicknames() {
+        List<Member> membersWithoutNickname = memberRepository.findAllByNicknameIsNull();
+
+        for (Member member : membersWithoutNickname) {
+            String nickname;
+            do {
+                nickname = NicknameGenerator.generateNickname();
+            } while (memberRepository.existsByNickname(nickname));
+
+            member.setNickname(nickname);
+            memberRepository.save(member);
+        }
+    }
 }

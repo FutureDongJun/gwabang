@@ -60,7 +60,7 @@ public class Member implements UserDetails {
     @OneToMany(mappedBy = "member")
     private List<ArticleLike> articleLikes = new ArrayList<>();
 
-    @Column(length = 100, nullable = true, unique = true)
+    @Column(length = 100, nullable = false, unique = true)
     private String nickname;
 
     @Builder
