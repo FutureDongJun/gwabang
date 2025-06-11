@@ -63,7 +63,7 @@ public class ArticleService {
 
         articleRepository.save(article);
 
-        return new ArticleResponse(article.getId(), article.getTitle(), article.getContent());
+        return new ArticleResponse(article.getId(), article.getTitle(), article.getContent(),article.getCreatedAt());
     }
 
 
@@ -71,7 +71,7 @@ public class ArticleService {
     public ArticleResponse getArticle(Long id) {
         Article article = articleRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("게시글을 찾을 수 없습니다."));
-        return new ArticleResponse(article.getId(), article.getTitle(), article.getContent());
+        return new ArticleResponse(article.getId(), article.getTitle(), article.getContent(),article.getCreatedAt());
     }
 
     @Transactional
@@ -86,7 +86,7 @@ public class ArticleService {
         }
 
         article.update(dto.getTitle(), dto.getContent());
-        return new ArticleResponse(article.getId(), article.getTitle(), article.getContent());
+        return new ArticleResponse(article.getId(), article.getTitle(), article.getContent(),article.getCreatedAt());
     }
 
     @Transactional
@@ -114,7 +114,8 @@ public class ArticleService {
                 .map(article -> new ArticleListItemDto(
                         article.getId(),
                         article.getTitle(),
-                        article.getCreatedAt()
+                        article.getCreatedAt(),
+                        article.getMember().getEmail()
                 ))
                 .collect(Collectors.toList());
     }

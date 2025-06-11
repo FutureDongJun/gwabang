@@ -3,15 +3,20 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 export default function PostDetail() {
-  const { groupcode, id } = useParams();
+  const { groupCode, id } = useParams();
   const [post, setPost] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const API_URL = process.env.REACT_APP_API_URL;
 
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const res = await axios.get(`/api/article/${groupcode}/${id}`);
+        console.log("groupCode: ", groupCode, " id:", id);
+        const res = await axios.get(
+          `${API_URL}/api/article/${groupCode}/${id}`
+        );
+        console.log(res.data);
         setPost(res.data);
       } catch (err) {
         setError("게시글을 불러오는데 실패했습니다.");

@@ -20,9 +20,12 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     Optional<Member> findByIdWithDepartment(@Param("id") Long id);
 
 
-    @Query("SELECT new com.gwabang.gwabang.department.dto.DepartmentStatsDto(d.id, d.name, COUNT(m)) " +
-            "FROM Member m JOIN m.department d " +
-            "GROUP BY d.id, d.name " +
+    @Query("SELECT new com.gwabang.gwabang.department.dto.DepartmentStatsDto(" +
+            "d.id, d.name, dg.code, COUNT(m)) " +
+            "FROM Member m " +
+            "JOIN m.department d " +
+            "JOIN d.departmentGroup dg " +
+            "GROUP BY d.id, d.name, dg.code " +
             "ORDER BY COUNT(m) DESC")
     List<DepartmentStatsDto> findTopDepartmentsByMemberCount(Pageable pageable);
 

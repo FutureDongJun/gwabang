@@ -11,6 +11,7 @@ export default function DepartmentBoard() {
   const API_URL = process.env.REACT_APP_API_URL;
 
   useEffect(() => {
+    console.log("departmentboard groupcode: ", groupCode);
     const fetchDepartmentGroupName = async () => {
       try {
         const res = await axios.get(
@@ -77,6 +78,15 @@ export default function DepartmentBoard() {
             <li
               key={article.id}
               className="p-4 bg-white dark:bg-[#2A2C36] rounded shadow"
+              onClick={() => {
+                console.log(
+                  "navigate groupCode:",
+                  groupCode,
+                  "article id:",
+                  article.id
+                );
+                navigate(`/article/${groupCode}/${article.id}`);
+              }}
             >
               <h2 className="text-lg font-semibold">{article.title}</h2>
               <p className="text-sm text-gray-500">

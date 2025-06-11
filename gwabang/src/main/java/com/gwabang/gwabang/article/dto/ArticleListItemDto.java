@@ -12,4 +12,5 @@ public class ArticleListItemDto {
     private Long id;
     private String title;
     private LocalDateTime createdAt;
+    private String author;
 }

@@ -40,6 +40,7 @@ export default function Sidebar() {
         console.log("에베베");
         const res = await axios.get(`${API_URL}/api/departments/popular`);
         setPopularDepartments(res.data);
+        console.log(res);
       } catch (error) {
         console.error("인기 학과 불러오기 실패", error);
       }
@@ -149,7 +150,7 @@ export default function Sidebar() {
           {popularDepartments.map((dept) => (
             <li key={dept.departmentId} className="flex justify-between">
               <Link
-                to={`/article/${dept.departmentId}`}
+                to={`/article/${dept.groupCode}`}
                 className="hover:text-orange-600"
               >
                 {dept.departmentName}{" "}

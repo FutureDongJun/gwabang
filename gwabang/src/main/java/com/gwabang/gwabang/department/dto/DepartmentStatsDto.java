@@ -8,5 +8,6 @@ import lombok.Getter;
 public class DepartmentStatsDto {
     private Long departmentId;
     private String departmentName;
+    private Integer groupCode;
     private Long memberCount;
 }

@@ -54,13 +54,18 @@ public class ArticleController {
         }
     }
     @GetMapping("/{id}")
-    public ResponseEntity<ArticleResponse> getArticle(@PathVariable Long id) {
+    public ResponseEntity<ArticleResponse> getArticle(
+            @PathVariable String groupCode,
+            @PathVariable Long id
+    ) {
+        System.out.println("게시글 불러오고싶다");
         ArticleResponse article = articleService.getArticle(id);
-    return ResponseEntity.ok(article);
+        return ResponseEntity.ok(article);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<ArticleResponse> updateArticle(
+            @PathVariable String groupCode,
         @PathVariable Long id,
         @RequestBody ArticleRequest dto,
         @RequestHeader("Authorization") String authorizationHeader
@@ -76,6 +81,7 @@ public class ArticleController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteArticle(
+            @PathVariable String groupCode,
             @PathVariable Long id,
             @RequestHeader("Authorization") String authorizationHeader
     ) {
