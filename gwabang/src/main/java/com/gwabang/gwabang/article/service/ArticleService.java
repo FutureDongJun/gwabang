@@ -81,7 +81,7 @@ public class ArticleService {
         Article article = articleRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("게시글을 찾을 수 없습니다."));
 
-        if (!article.getMember().getEmail().equals(email)) {
+        if (!article.getMember().getId().toString().equals(email)) {
             throw new RuntimeException("작성자만 수정할 수 있습니다.");
         }
 
@@ -96,7 +96,7 @@ public class ArticleService {
         Article article = articleRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("게시글을 찾을 수 없습니다."));
 
-        if (!article.getMember().getEmail().equals(email)) {
+        if (!article.getMember().getId().toString().equals(email)) {
             throw new RuntimeException("작성자만 삭제할 수 있습니다.");
         }
 
