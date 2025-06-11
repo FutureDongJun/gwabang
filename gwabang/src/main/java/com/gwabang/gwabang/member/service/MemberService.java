@@ -8,6 +8,7 @@ import com.gwabang.gwabang.member.dto.MemberResponse;
 import com.gwabang.gwabang.member.entity.Member;
 import com.gwabang.gwabang.member.repository.MemberRepository;
 import com.gwabang.gwabang.security.config.jwt.JwtTokenProvider;
+import com.gwabang.gwabang.util.NicknameGenerator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -33,10 +34,16 @@ public class MemberService {
         Department department = departmentRepository.findById(dto.getDepartmentId())
                 .orElseThrow(() -> new IllegalArgumentException("Department not found"));
 
+        String nickname;
+        do {
+            nickname = NicknameGenerator.generateNickname();
+        } while (memberRepository.existsByNickname(nickname)); // 중복 닉네임 방지
+
         Member member = Member.builder()
                 .email(dto.getEmail())
                 .password(passwordEncoder.encode(dto.getPassword()))
                 .department(department)
+                .nickname(nickname) // ← 추가!
                 .build();
 
         Member savedMember = memberRepository.save(member);
@@ -44,6 +51,7 @@ public class MemberService {
 
         return savedMember.getId();
     }
+
 
     public Member findById(Long id) {
         return memberRepository.findById(id)
