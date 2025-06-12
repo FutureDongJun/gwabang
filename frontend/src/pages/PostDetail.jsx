@@ -54,7 +54,7 @@ export default function PostDetail() {
     <div>
       <h1 className="text-2xl font-bold mb-2">{post.title}</h1>
       <div className="text-sm text-gray-500 mb-4">
-        {post.nickname} • {new Date(post.createdAt).toLocaleDateString()}
+        {new Date(post.createdAt).toLocaleDateString()} • {post.nickname}
       </div>
       <div className="prose prose-sm dark:prose-invert max-w-none mb-4">
         <p>{post.content}</p>

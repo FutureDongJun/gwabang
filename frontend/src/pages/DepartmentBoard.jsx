@@ -90,8 +90,8 @@ export default function DepartmentBoard() {
             >
               <h2 className="text-lg font-semibold">{article.title}</h2>
               <p className="text-sm text-gray-500">
-                {article.author} •{" "}
-                {new Date(article.createdAt).toLocaleDateString()}
+                {new Date(article.createdAt).toLocaleDateString()} •{" "}
+                {article.author}
               </p>
               <p className="mt-2 text-gray-700 dark:text-gray-300 line-clamp-2">
                 {article.content}
