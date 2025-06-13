@@ -92,14 +92,11 @@ export default function Sidebar() {
       {/* 좌측 사이드바 */}
       <aside className="w-64 p-6 bg-white dark:bg-[#1E2028] shadow-md">
         <div className="flex items-center space-x-2 mb-6">
-          <img src="/images/Gwabang_logo.jpg" alt="로고" className="w-6 h-6"/>
+          <img src="/images/Gwabang_logo.jpg" alt="로고" className="w-6 h-6" />
           <span>
-            <Link to={"/"}>
-              학과방
-            </Link>
+            <Link to={"/"}>학과방</Link>
           </span>
         </div>
-
         {isLoggedIn ? (
           <button
             onClick={handleLogout}
@@ -122,7 +119,6 @@ export default function Sidebar() {
             </Link>
           </>
         )}
-
         {isLoggedIn && (
           <Link to={"/user/me"}>
             <button className="w-full mb-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg font-semibold">
@@ -130,7 +126,6 @@ export default function Sidebar() {
             </button>
           </Link>
         )}
-
         <div className="mb-4 text-sm font-medium text-gray-700 dark:text-gray-300">
           학과별 커뮤니티 둘러보기
         </div>
@@ -147,20 +142,24 @@ export default function Sidebar() {
           </button>
         </div>
         <ul className="space-y-2 text-sm">
-          {popularDepartments.map((dept) => (
-            <li key={dept.departmentId} className="flex justify-between">
-              <Link
-                to={`/article/${dept.groupCode}`}
-                className="hover:text-orange-600"
-              >
-                {dept.departmentName}{" "}
-                <span className="text-gray-400">
-                  {dept.memberCount.toLocaleString()}명
-                </span>
-              </Link>
-            </li>
-          ))}
-        </ul>
+          {Array.isArray(popularDepartments) ? (
+            popularDepartments.map((dept) => (
+              <li key={dept.departmentId} className="flex justify-between">
+                <Link
+                  to={`/article/${dept.gr}`}
+                  className="hover:text-orange-600"
+                >
+                  {dept.departmentName}{" "}
+                  <span className="text-gray-400">
+                    {dept.memberCount.toLocaleString()}명
+                  </span>
+                </Link>
+              </li>
+            ))
+          ) : (
+            <li className="text-gray-500">부서 정보를 불러오는 중입니다...</li>
+          )}
+        </ul>{" "}
       </aside>
       <Outlet />
     </div>
