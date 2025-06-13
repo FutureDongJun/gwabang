@@ -5,7 +5,7 @@ import { useNavigate, Link } from "react-router";
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const API_URL = process.env.REACT_APP_API_URL;
+  const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8080";
   const navigate = useNavigate();
   const handleLogin = async (e) => {
     e.preventDefault();

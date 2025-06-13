@@ -5,7 +5,7 @@ import { Outlet, useNavigate, useParams } from "react-router-dom";
 export default function EditPostPage() {
   const { groupCode, id } = useParams();
   const navigate = useNavigate();
-  const API_URL = process.env.REACT_APP_API_URL;
+  const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8080";
 
   const [post, setPost] = useState({ title: "", content: "" });
   const [loading, setLoading] = useState(true);

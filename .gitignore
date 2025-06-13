@@ -2,7 +2,6 @@
 /frontend/node_modules/
 /frontend/.next/
 /frontend/dist/
-/frontend/.env
 
 # backend 관련 무시
 /gwabang/.gradle/
@@ -15,4 +14,3 @@
 .DS_Store
 *.iml
 *.log
-.env
