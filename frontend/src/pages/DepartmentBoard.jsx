@@ -8,7 +8,7 @@ export default function DepartmentBoard() {
   const [loading, setLoading] = useState(true);
   const [departmentGroupName, setDepartmentGroupName] = useState("");
   const navigate = useNavigate();
-  const API_URL = process.env.REACT_APP_API_URL;
+  const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8080";
 
   useEffect(() => {
     console.log("departmentboard groupcode: ", groupCode);

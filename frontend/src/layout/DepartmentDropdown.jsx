@@ -6,10 +6,11 @@ import axios from "axios";
 export default function DepartmentDropdown({ selected, setSelected }) {
   const [query, setQuery] = useState("");
   const [departments, setDepartments] = useState([]);
+  const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8080";
 
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/api/departments`)
+      .get(`${API_URL}/api/departments`)
       .then((res) => {
         console.log("서버 응답:", res.data); // 이걸 확인하세요
         setDepartments(res.data);

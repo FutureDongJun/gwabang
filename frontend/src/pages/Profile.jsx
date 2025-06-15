@@ -4,12 +4,13 @@ import { useEffect, useState } from "react";
 
 export default function Profile() {
   const [user, setUser] = useState(null);
+  const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8080";
 
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
     console.log("accessToken:", token);
     axios
-      .get("http://localhost:8080/api/user/me", {
+      .get(`${API_URL}/api/user/me`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

@@ -9,7 +9,7 @@ export default function SignupPage() {
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [selectedDepartment, setSelectedDepartment] = useState("");
   const [emailChecked, setEmailChecked] = useState(false);
-  const API_URL = process.env.REACT_APP_API_URL;
+  const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8080";
   const navigate = useNavigate();
 
   useEffect(() => {
