@@ -1,7 +1,21 @@
 # 🎓 학과방 (Gwabang)
 
-대학생을 위한 학과 기반 커뮤니티 플랫폼.  
-인가를 이용한 학과별 게시판 접근을 통해 같은 학과 학생들과 소통할 수 있는 서비스입니다.
+## 대학생을 위한 학과 기반 커뮤니티 플랫폼
+
+전국의 동일 학과 대학생들이 함께 소통하고 협력할 수 있는 커뮤니티 플랫폼입니다.
+학교 인증을 통해 학과별 게시판에 접근할 수 있어, 같은 전공을 가진 학생들끼리 깊이 있는 정보 공유와 네트워킹이 가능합니다.
+
+기존의 ‘학교 내 커뮤니티’와 달리, 이 플랫폼은 전국 단위의 학과 중심 커뮤니티를 지향하며 다음과 같은 활동이 가능합니다:
+
+- 공모전/대외활동 정보 공유 및 팀원 모집
+
+- 다인원 협업 프로젝트 진행
+
+- 인턴십 및 진로 관련 정보 교류
+
+- 대학원 진학 및 학과 공부 관련 자료 공유
+
+같은 길을 걷는 동료들과 함께, 더 넓은 학과 커뮤니티를 경험해보세요!
 
 ---
 
@@ -19,18 +33,17 @@
 
 ## 🛠️ 기술 스택
 
-| 구성 | 사용 기술 |
-|------|-----------|
-| Frontend | React 19, React Router v7, Axios, Tailwind CSS |
-| Backend | Spring Boot 3.4.5, Spring Security, JPA, JWT, MySQL |
-| 기타 | Vite, ESLint, dotenv, Postman (API 테스트) |
+| 구성     | 사용 기술                                           |
+| -------- | --------------------------------------------------- |
+| Frontend | React 19, React Router v7, Axios, Tailwind CSS      |
+| Backend  | Spring Boot 3.4.5, Spring Security, JPA, JWT, MySQL |
+| 기타     | Vite, ESLint, dotenv, Postman (API 테스트)          |
 
 ---
 
 ## 🗂️ 폴더 구조
 
 ![image](https://github.com/user-attachments/assets/c3ec2ca0-fa32-4248-ab5b-2c96037ced5a)
-
 
 ---
 
@@ -45,15 +58,15 @@
 
 ## 📄 주요 API
 
-| 기능 | Method | Endpoint |
-|------|--------|----------|
-| 회원가입 | POST | `/api/user/signup` |
-| 로그인 | POST | `/api/auth/login` |
-| 토큰 재발급 | POST | `/api/token` |
-| 내 정보 조회 | GET | `/api/user/me` |
-| 게시글 작성 | POST | `/api/article/{groupCode}` |
-| 게시글 목록 조회 | GET | `/api/article/{groupCode}` |
-| 게시글 상세 조회 | GET | `/api/article/{groupCode}/{id}` |
+| 기능             | Method | Endpoint                        |
+| ---------------- | ------ | ------------------------------- |
+| 회원가입         | POST   | `/api/user/signup`              |
+| 로그인           | POST   | `/api/auth/login`               |
+| 토큰 재발급      | POST   | `/api/token`                    |
+| 내 정보 조회     | GET    | `/api/user/me`                  |
+| 게시글 작성      | POST   | `/api/article/{groupCode}`      |
+| 게시글 목록 조회 | GET    | `/api/article/{groupCode}`      |
+| 게시글 상세 조회 | GET    | `/api/article/{groupCode}/{id}` |
 
 ---
 
