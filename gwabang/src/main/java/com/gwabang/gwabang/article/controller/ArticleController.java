@@ -15,7 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/article/{groupCode}")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://44.203.145.236")
 public class ArticleController {
 
     private final ArticleService articleService;

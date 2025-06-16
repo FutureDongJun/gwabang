@@ -13,7 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/departments")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://44.203.145.236")
 public class DepartmentController {
 
     private final DepartmentRepository departmentRepository;
