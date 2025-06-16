@@ -21,7 +21,7 @@ public class TokenService {
             throw new IllegalArgumentException("Unexpected token");
         }
 
-        Long memberId = Long.valueOf(refreshTokenService.findByRefreshToken(refreshToken).getMemberId());
+        Long memberId = Long.valueOf(refreshTokenService.findByRefreshToken(refreshToken).getMember().getId());
         Member member = memberService.findById(memberId);
 
         System.out.println("🧪 [디버깅] 토큰에서 추출한 memberId: " + memberId);

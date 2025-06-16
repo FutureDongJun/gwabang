@@ -1,5 +1,6 @@
 package com.gwabang.gwabang.security.config.jwt.entity;
 
+import com.gwabang.gwabang.member.entity.Member;
 import com.gwabang.gwabang.security.config.jwt.repository.RefreshTokenRepository;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -15,14 +16,15 @@ public class RefreshToken {
     @Column(name = "id", updatable = false)
     private Long id;
 
-    @Column(name = "member_id", nullable = false, unique = true)
-    private Long memberId;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id", nullable = false, unique = true)
+    private Member member;
 
-    @Column(name = "refresh_token", nullable = false,length = 1000)
+    @Column(name = "refresh_token", nullable = false, length = 1000)
     private String refreshToken;
 
-    public RefreshToken(Long memberId, String refreshToken) {
-        this.memberId = memberId;
+    public RefreshToken(Member member, String refreshToken) {
+        this.member = member;
         this.refreshToken = refreshToken;
     }
 

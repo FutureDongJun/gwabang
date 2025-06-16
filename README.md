@@ -81,4 +81,4 @@
 - 커밋 메시지 컨벤션: `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`
 - 브랜치 전략: `main`, `dev`, `feature/*`
 
----
+## ![erd](image.png)
