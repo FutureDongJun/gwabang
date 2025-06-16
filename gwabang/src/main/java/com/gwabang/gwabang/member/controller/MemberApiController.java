@@ -11,7 +11,7 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://44.203.145.236")
 @Controller
 public class MemberApiController {
     private final MemberService memberService;
