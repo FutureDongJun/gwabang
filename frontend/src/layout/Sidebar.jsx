@@ -146,7 +146,7 @@ export default function Sidebar() {
             popularDepartments.map((dept) => (
               <li key={dept.departmentId} className="flex justify-between">
                 <Link
-                  to={`/article/${dept.gr}`}
+                  to={`/article/${dept.groupCode}`}
                   className="hover:text-orange-600"
                 >
                   {dept.departmentName}{" "}
